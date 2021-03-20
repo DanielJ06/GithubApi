@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Github</string>
+    <string name="repo_desc">Taking voice conversations to the moon 🚀</string>
+    <string name="event_title">danielj06 starred benawad/dogehouse</string>
 </resources>
