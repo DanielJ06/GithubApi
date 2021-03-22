@@ -6,6 +6,8 @@ import retrofit2.Response
 
 class Repository {
 
-    suspend fun getEvents(name: String): Response<Event> = RetrofitInstance.api.getEventsFeed(name)
+    suspend fun getEvents(username: String): Response<List<Event>> {
+        return RetrofitInstance.api.getEventsFeed(username)
+    }
 
 }

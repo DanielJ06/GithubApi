@@ -43,4 +43,9 @@ class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
         return events.size
     }
 
+    fun setData(data: List<Event>) {
+        events = data
+        notifyDataSetChanged()
+    }
+
 }

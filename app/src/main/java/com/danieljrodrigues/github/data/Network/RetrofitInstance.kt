@@ -21,7 +21,7 @@ class RetrofitInstance {
                 .build()
         }
 
-        val api by lazy {
+        val api: GithubApi by lazy {
             retrofit.create(GithubApi::class.java)
         }
     }

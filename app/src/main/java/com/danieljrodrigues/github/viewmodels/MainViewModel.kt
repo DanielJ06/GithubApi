@@ -15,7 +15,7 @@ class MainViewModel(
     private val repository: Repository,
 ) : ViewModel() {
 
-    var eventsResponse: MutableLiveData<NetworkResult<Event>> = MutableLiveData()
+    val eventsResponse: MutableLiveData<NetworkResult<List<Event>>> = MutableLiveData()
 
     fun getEvents() = viewModelScope.launch {
         getEventsSafeCall("danielj06")
@@ -26,27 +26,19 @@ class MainViewModel(
         try {
             val response = repository.getEvents(username)
             eventsResponse.value = handleEventsResponse(response)
-
-            val event = eventsResponse.value!!.data
         } catch (e: Exception) {
             eventsResponse.value = NetworkResult.Error("Events not found.")
         }
     }
 
-    private fun handleEventsResponse(response: Response<Event>): NetworkResult<Event>? {
-        when {
-            response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Timeout")
-            }
-            response.body()!!.toString().isNullOrEmpty() -> {
-                return NetworkResult.Error("Events not found")
-            }
+    private fun handleEventsResponse(response: Response<List<Event>>): NetworkResult<List<Event>>? {
+        return when {
             response.isSuccessful -> {
                 val events = response.body()
-                return NetworkResult.Success(events!!)
+                NetworkResult.Success(events!!)
             }
             else -> {
-                return NetworkResult.Error(response.message())
+                NetworkResult.Error(response.message())
             }
         }
 
